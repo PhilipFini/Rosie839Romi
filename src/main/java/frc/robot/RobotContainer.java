@@ -24,6 +24,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.ArcadeDrive;
 import frc.robot.commands.AutonomousDistance;
 import frc.robot.commands.AutonomousTime;
+import frc.robot.subsystems.Intake;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.OnBoardIO;
 import frc.robot.subsystems.OnBoardIO.ChannelMode;
@@ -39,6 +41,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.Button;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -49,10 +52,13 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final Drivetrain m_drivetrain = new Drivetrain();
+  private final Intake m_intake = new Intake();
   private final OnBoardIO m_onboardIO = new OnBoardIO(ChannelMode.INPUT, ChannelMode.INPUT);
 
   // Assumes a gamepad plugged into channnel 0
   private final Joystick m_controller = new Joystick(0);
+
+  public JoystickButton m_LBBtn;
 
   // Create SmartDashboard chooser for autonomous routines
   private final SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -170,6 +176,9 @@ public class RobotContainer {
     m_chooser.addOption("Auto Routine Distance", new AutonomousDistance(m_drivetrain));
     m_chooser.addOption("Auto Routine Time", new AutonomousTime(m_drivetrain));
     
+    m_LBBtn = new JoystickButton(m_controller, 6);
+    m_LBBtn.whileHeld(new IntakeCommand(m_intake));
+
     SmartDashboard.putData(m_chooser);
   }
 

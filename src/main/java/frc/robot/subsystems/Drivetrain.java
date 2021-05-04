@@ -24,6 +24,7 @@ public class Drivetrain extends SubsystemBase {
   // PWM channels 0 and 1 respectively
   private final Spark m_leftMotor = new Spark(0);
   private final Spark m_rightMotor = new Spark(1);
+  
 
   // The Romi has onboard encoders that are hardcoded
   // to use DIO pins 4/5 and 6/7 for the left and right
